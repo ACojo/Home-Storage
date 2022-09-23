@@ -26,5 +26,7 @@ class Bilet(models.Model):
     start_station = models.CharField(max_length=16)
     stop_station = models.CharField(max_length=16)
     current_time = models.DateTimeField(auto_now_add= True)
+    #dafdefaefas
+    #fdadfwfdaw
     #id_persoana = models.ForeignKey("Persoana", on_delete=models.CASCADE, default= -1)
 
