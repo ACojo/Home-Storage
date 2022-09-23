@@ -81,5 +81,8 @@ class CreatePersoanaView(APIView):
             return Response(PersoanaSerializer(person).data, status = status.HTTP_201_CREATED)
     
         return Response({'Bad Request': 'Invalid data...'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    def get(self, request, format = None):
+        
 
 
