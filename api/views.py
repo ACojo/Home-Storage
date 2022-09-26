@@ -4,43 +4,14 @@ from django.shortcuts import render
 from rest_framework import viewsets, status, generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import BiletSerializer, CreatePersoanaSerializer, PersoanaSerializer, CreateBiletSerializer
-from api.models import Bilet, Persoana
+from .serializers import  CreatePersoanaSerializer, PersoanaSerializer
+from api.models import  Persoana
 
 # Create your views here.
 
-class BiletView(generics.ListAPIView):
-    queryset = Bilet.objects.all()
-    serializer_class = BiletSerializer
 
 
 
-class CreateBiletView(APIView):
-    serializer_class = CreateBiletSerializer
-
-    def post(self, request, format = None):
-        if not self.request.session.exists(self.request.session.session_key):
-            self.request.session.create()
-        
-        serializer = self.serializer_class(data = request.data)
-
-        if serializer.is_valid():
-            price = serializer.data.get('price')
-            start_station = serializer.data.get('start_station')
-            stop_station = serializer.data.get('stop_station')
-
-            ticket = Bilet(price = price, start_station = start_station, stop_station = stop_station)
-            ticket.save()
-            return Response(BiletSerializer(ticket).data, status = status.HTTP_201_CREATED)
-        return Response({'Bad Request': 'Invalid data...'}, status=status.HTTP_400_BAD_REQUEST)
-
-    def get(self, request, format = None):
-        queryset = Bilet.objects.all()
-        codes = [bilet.code for bilet in Bilet.objects.all()]
-        bilete = Bilet.objects.all().values('code','price','start_station','stop_station','current_time')
-        bilete_list = list(bilete)
-        return JsonResponse(bilete_list, safe = False)
-        #return  Response(codes, status = status.HTTP_200_OK)
         
 
 class PersoanaView(generics.ListAPIView):
@@ -63,26 +34,34 @@ class CreatePersoanaView(APIView):
 
         if serializer.is_valid():
             print(serializer.data)
+            
             name = serializer.data.get('name')
             surname = serializer.data.get('surname')
-            id_card = serializer.data.get('id_card')
+            user = serializer.data.get('user')
+            password = serializer.data.get('password')
+            canUpload = serializer.data.get('canUpload')
+            canDownload = serializer.data.get('canDownload')
             print(self.request.session.session_key)
 
-            queryset = Persoana.objects.filter(name = name, surname = surname)
+            queryset = Persoana.objects.filter(user = user)
             if queryset.exists():
                 person = queryset[0]
                 person.name = name
                 person.surname = surname
-                person.id_card = id_card
-                person.save(update_fields =['id_card'])
+                person.password = password
+                person.canUpload = canUpload
+                person.canDownload = canDownload
+                #'id','name','surname','user','password','canUpload','canDownload')
+
+                person.save(update_fields =['name','surname','password','canUpload','canDownload'])
             else:
-                person = Persoana(name = name, surname = surname, id_card = id_card)
+                person = Persoana(name = name, surname = surname, user = user, password= password,  canUpload = canUpload , canDownload = canDownload)
                 person.save()
             return Response(PersoanaSerializer(person).data, status = status.HTTP_201_CREATED)
     
         return Response({'Bad Request': 'Invalid data...'}, status=status.HTTP_400_BAD_REQUEST)
     
-    def get(self, request, format = None):
+    # def get(self, request, format = None):
         
 
 

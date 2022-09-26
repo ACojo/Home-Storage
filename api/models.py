@@ -1,32 +1,18 @@
 #from tkinter import CASCADE
+import hashlib
 from django.db import models
 import string
 import random
 
-
-def gen_code():
-    length = 6
-
-    while True:
-        id = ''.join(random.choices(string.ascii_uppercase, k = length))
-        if Bilet.objects.filter(code = id).count() == 0:
-            break
-    return id
+def sha256Encode(hash_string):
+    sha_signature = hashlib.sha256(hash_string.encode()).hexdigest()
+    return sha_signature
 
 # Create your models here.
 class Persoana(models.Model):
     name = models.CharField(max_length=15, null= False, default ="")
     surname = models.CharField(max_length=15, null=False, default="")
-    id_card = models.CharField(max_length=12, null = False, default="", unique=True)
-
-
-class Bilet(models.Model):
-    code = models.CharField(max_length= 8, default=gen_code, unique = True)
-    price = models.IntegerField(null = False)
-    start_station = models.CharField(max_length=16)
-    stop_station = models.CharField(max_length=16)
-    current_time = models.DateTimeField(auto_now_add= True)
-    #dafdefaefas
-    #fdadfwfdaw
-    #id_persoana = models.ForeignKey("Persoana", on_delete=models.CASCADE, default= -1)
-
+    user = models.CharField(max_length=12, null = False, default="")
+    password = models.CharField(max_length=12, null = False, default="")
+    canUpload = models.BooleanField(default=True)
+    canDownload = models.BooleanField(default = False)
