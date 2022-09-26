@@ -5,7 +5,7 @@ from rest_framework import viewsets, status, generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import  CreatePersoanaSerializer, PersoanaSerializer
-from api.models import  Persoana
+from api.models import  Persoana, sha256Encode
 
 # Create your views here.
 
@@ -38,7 +38,7 @@ class CreatePersoanaView(APIView):
             name = serializer.data.get('name')
             surname = serializer.data.get('surname')
             user = serializer.data.get('user')
-            password = serializer.data.get('password')
+            password = sha256Encode(serializer.data.get('password'))
             canUpload = serializer.data.get('canUpload')
             canDownload = serializer.data.get('canDownload')
             print(self.request.session.session_key)
