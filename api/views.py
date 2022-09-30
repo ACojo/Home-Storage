@@ -15,16 +15,16 @@ from api.models import  Persoana, sha256Encode
         
 
 class PersoanaView(generics.ListAPIView):
-    queryset = Persoana.objects.all()
-    serializer_class = PersoanaSerializer
+     queryset = Persoana.objects.all()
+     serializer_class = PersoanaSerializer
 
 
 class CreatePersoanaView(APIView):
     serializer_class = CreatePersoanaSerializer
     
-    # def get():
-    #     serializer_class = PersoanaSerializer
-    #     queryset = Persoana.objects.all()
+    def get():
+         serializer_class = PersoanaSerializer
+         queryset = Persoana.objects.all()
 
     def post(self, request, format= None):
         if not self.request.session.exists(self.request.session.session_key):
@@ -62,6 +62,9 @@ class CreatePersoanaView(APIView):
         return Response({'Bad Request': 'Invalid data...'}, status=status.HTTP_400_BAD_REQUEST)
     
     # def get(self, request, format = None):
+    #     serializer_class = PersoanaSerializer
+    #     queryset = Persoana.objects.all()
+    #     return Response(queryset)
         
 
 
