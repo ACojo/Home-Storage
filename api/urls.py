@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import  PersoanaView, CreatePersoanaView
+from .views import   CreatePersoanaView ,PersoanaView
 
 urlpatterns = [
     # path('create-bilet/', CreateBiletView.as_view()),
@@ -8,5 +8,6 @@ urlpatterns = [
     path('persoana/', PersoanaView.as_view())
     
     #path('persoana/<int:pk>/', PersoanaView.as_view())
+    #asdas
 ]
 
