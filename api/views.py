@@ -22,9 +22,9 @@ class PersoanaView(generics.ListAPIView):
 class CreatePersoanaView(APIView):
     serializer_class = CreatePersoanaSerializer
     
-    def get():
-         serializer_class = PersoanaSerializer
-         queryset = Persoana.objects.all()
+    # def get():
+    #      serializer_class = PersoanaSerializer
+    #      queryset = Persoana.objects.all()
 
     def post(self, request, format= None):
         if not self.request.session.exists(self.request.session.session_key):
