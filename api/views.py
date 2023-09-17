@@ -4,8 +4,8 @@ from django.shortcuts import render
 from rest_framework import viewsets, status, generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import  CreatePersoanaSerializer, PersoanaSerializer
-from api.models import  Persoana, sha256Encode
+from .serializers import  CreatePersonSerializer, PersonSerializer
+from api.models import  Person, sha256Encode
 
 # Create your views here.
 
@@ -14,13 +14,13 @@ from api.models import  Persoana, sha256Encode
 
         
 
-class PersoanaView(generics.ListAPIView):
-     queryset = Persoana.objects.all()
-     serializer_class = PersoanaSerializer
+class PersonView(generics.ListAPIView):
+     queryset = Person.objects.all()
+     serializer_class = PersonSerializer
 
 
-class CreatePersoanaView(APIView):
-    serializer_class = CreatePersoanaSerializer
+class CreatePersonView(APIView):
+    serializer_class = CreatePersonSerializer
     
     # def get():
     #      serializer_class = PersoanaSerializer
@@ -43,7 +43,7 @@ class CreatePersoanaView(APIView):
             canDownload = serializer.data.get('canDownload')
             print(self.request.session.session_key)
 
-            queryset = Persoana.objects.filter(user = user)
+            queryset = Person.objects.filter(user = user)
             if queryset.exists():
                 person = queryset[0]
                 person.name = name
@@ -55,9 +55,9 @@ class CreatePersoanaView(APIView):
 
                 person.save(update_fields =['name','surname','password','canUpload','canDownload'])
             else:
-                person = Persoana(name = name, surname = surname, user = user, password= password,  canUpload = canUpload , canDownload = canDownload)
+                person = Person(name = name, surname = surname, user = user, password= password,  canUpload = canUpload , canDownload = canDownload)
                 person.save()
-            return Response(PersoanaSerializer(person).data, status = status.HTTP_201_CREATED)
+            return Response(PersonSerializer(person).data, status = status.HTTP_201_CREATED)
     
         return Response({'Bad Request': 'Invalid data...'}, status=status.HTTP_400_BAD_REQUEST)
     
