@@ -9,7 +9,7 @@ def sha256Encode(hash_string):
     return sha_signature
 
 # Create your models here.
-class Persoana(models.Model):
+class Person(models.Model):
     name = models.CharField(max_length=15, null= False, default ="")
     surname = models.CharField(max_length=15, null=False, default="")
     user = models.CharField(max_length=12, null = False, default="")

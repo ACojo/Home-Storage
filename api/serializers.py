@@ -1,20 +1,20 @@
 from dataclasses import field
 from rest_framework import serializers
-from .models import  Persoana
+from .models import  Person
 
 
 
-class PersoanaSerializer(serializers.ModelSerializer):
+class PersonSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Persoana
+        model = Person
         fields = ('id','name','surname','user','password','canUpload','canDownload')
 
 
 
 
-class CreatePersoanaSerializer(serializers.ModelSerializer):
+class CreatePersonSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Persoana
+        model = Person
         fields = ('name','surname','user','password','canUpload','canDownload')
 
 
